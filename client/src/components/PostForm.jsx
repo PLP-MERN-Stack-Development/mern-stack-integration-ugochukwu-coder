@@ -16,29 +16,38 @@ const PostForm = () => {
   const [error, setError] = useState('');
 
   useEffect(() => {
-    if (id) {
-      const post = state.posts.find(p => p._id === id);
-      if (post) {
+  let isMounted = true;
+
+  const fetchPost = async () => {
+    try {
+      const existingPost = state.posts.find(p => p._id === id);
+      if (existingPost && isMounted) {
+        setFormData({
+          title: existingPost.title,
+          content: existingPost.content,
+          author: existingPost.author
+        });
+      } else if (isMounted) {
+        const post = await postService.getPost(id);
         setFormData({
           title: post.title,
           content: post.content,
           author: post.author
         });
-      } else {
-        // If post not in context, fetch it
-        postService.getPost(id)
-          .then(post => {
-            setFormData({
-              title: post.title,
-              content: post.content,
-              author: post.author
-            });
-          })
-          
-          .catch(err => setError('Failed to fetch post'));
       }
+    } catch (err) {
+      if (isMounted) setError('Failed to fetch post');
+      console.error(err);
     }
-  }, [id, state.posts]);
+  };
+
+  fetchPost();
+
+  return () => {
+    isMounted = false;
+  };
+}, [id, state.posts]);
+
 
   const handleChange = (e) => {
     setFormData({
