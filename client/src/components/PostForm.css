@@ -1,0 +1,65 @@
+.pf-container {
+  max-width: 600px;
+  margin: 2rem auto;
+  padding: 2rem;
+  background: #fff;
+  border-radius: 10px;
+  box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+}
+
+.pf-title {
+  font-size: 1.8rem;
+  font-weight: bold;
+  margin-bottom: 1rem;
+  text-align: center;
+}
+
+.pf-error {
+  color: red;
+  margin-bottom: 1rem;
+  text-align: center;
+}
+
+.pf-form label {
+  display: block;
+  margin-bottom: 1rem;
+  font-weight: 500;
+  color: #333;
+}
+
+.pf-form input,
+.pf-form textarea {
+  width: 100%;
+  padding: 0.75rem;
+  margin-top: 0.25rem;
+  border: 1px solid #ccc;
+  border-radius: 6px;
+  font-size: 1rem;
+}
+
+.pf-form textarea {
+  height: 150px;
+  resize: vertical;
+}
+
+.pf-form button {
+  display: block;
+  width: 100%;
+  padding: 0.75rem;
+  background-color: #007BFF;
+  color: white;
+  border: none;
+  font-size: 1rem;
+  border-radius: 6px;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+}
+
+.pf-form button:hover:not(:disabled) {
+  background-color: #0056b3;
+}
+
+.pf-form button:disabled {
+  opacity: 0.6;
+  cursor: not-allowed;
+}

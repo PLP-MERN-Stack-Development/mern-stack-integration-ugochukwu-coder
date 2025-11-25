@@ -1,22 +1,46 @@
-import { Link } from "react-router-dom";
+import { Link } from 'react-router-dom';
+import { useState } from 'react';
+import './Navbar.css';
 
 const Navbar = () => {
+  // Initialize login state from localStorage synchronously
+  const token = localStorage.getItem('token');
+  const [isLoggedIn] = useState(!!token);
+
+  const handleLogout = () => {
+    localStorage.removeItem('token');
+    window.location.reload(); // simple way to reset login state
+  };
+
   return (
-    <nav className="bg-blue-600 text-white shadow-md">
-      <div className="container mx-auto flex flex-col sm:flex-row justify-between items-center p-4">
-        {/* Logo */}
-        <Link to="/" className="text-2xl font-bold mb-2 sm:mb-0">
+    <nav className="navbar">
+      <div className="navbar-container">
+        <Link to="/" className="navbar-logo">
           BlogApp
         </Link>
 
-        {/* Links */}
-        <div className="flex flex-col sm:flex-row gap-4">
-          <Link to="/" className="hover:underline transition">
+        <div className="navbar-links">
+          <Link to="/" className="nav-link">
             Home
           </Link>
-          <Link to="/create" className="hover:underline transition">
+          <Link to="/create" className="nav-link">
             Create Post
           </Link>
+
+          {!isLoggedIn ? (
+            <>
+              <Link to="/login" className="nav-button">
+                Login
+              </Link>
+              <Link to="/register" className="nav-button">
+                Register
+              </Link>
+            </>
+          ) : (
+            <button className="nav-button logout-btn" onClick={handleLogout}>
+              Logout
+            </button>
+          )}
         </div>
       </div>
     </nav>
