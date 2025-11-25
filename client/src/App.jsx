@@ -4,6 +4,8 @@ import Navbar from './components/Navbar';
 import PostList from './components/PostList';
 import PostDetail from './components/PostDetail';
 import PostForm from './components/PostForm';
+import LoginForm from './components/LoginForm';
+import RegisterForm from './components/RegisterForm';
 
 function App() {
   return (
@@ -17,6 +19,8 @@ function App() {
               <Route path="/posts/:id" element={<PostDetail />} />
               <Route path="/create" element={<PostForm />} />
               <Route path="/edit/:id" element={<PostForm />} />
+              <Route path="/login" element={<LoginForm />} />
+              <Route path="/register" element={<RegisterForm />} />
             </Routes>
           </div>
         </div>

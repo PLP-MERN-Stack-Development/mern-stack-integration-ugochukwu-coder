@@ -15,8 +15,8 @@ const router = express.Router();
 
 router.get('/', getPosts);
 router.get('/:id', getPost);
-router.post('/', protect, postValidation, createPost);
-router.put('/:id', protect, postValidation, updatePost);
+router.post('/', postValidation, createPost);
+router.put('/:id', postValidation, updatePost);
 router.delete('/:id', protect, deletePost);
 router.post('/:id/comments', addComment);
 router.post('/:id/like', likePost);

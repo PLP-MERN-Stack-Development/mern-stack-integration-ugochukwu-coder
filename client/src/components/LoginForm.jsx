@@ -1,4 +1,3 @@
-// LoginForm.jsx
 import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 
@@ -6,16 +5,11 @@ const API_BASE = 'http://localhost:5000/api';
 
 const LoginForm = () => {
   const navigate = useNavigate();
-  const [formData, setFormData] = useState({
-    email: '',
-    password: '',
-  });
+  const [formData, setFormData] = useState({ email: '', password: '' });
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState('');
 
-  const handleChange = (e) => {
-    setFormData({ ...formData, [e.target.name]: e.target.value });
-  };
+  const handleChange = (e) => setFormData({ ...formData, [e.target.name]: e.target.value });
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -28,15 +22,10 @@ const LoginForm = () => {
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify(formData),
       });
-
-      if (!res.ok) throw new Error('Invalid email or password');
-
       const data = await res.json();
-      // store token in localStorage
+      if (!res.ok) throw new Error(data.message || 'Login failed');
       localStorage.setItem('token', data.token);
-
-      alert('Login successful!');
-      navigate('/'); // redirect to home
+      navigate('/');
     } catch (err) {
       setError(err.message);
     } finally {
@@ -49,25 +38,9 @@ const LoginForm = () => {
       <h2>Login</h2>
       {error && <div className="auth-error">{error}</div>}
       <form onSubmit={handleSubmit} className="auth-form">
-        <input
-          type="email"
-          name="email"
-          placeholder="Email"
-          value={formData.email}
-          onChange={handleChange}
-          required
-        />
-        <input
-          type="password"
-          name="password"
-          placeholder="Password"
-          value={formData.password}
-          onChange={handleChange}
-          required
-        />
-        <button type="submit" disabled={loading}>
-          {loading ? 'Logging in...' : 'Login'}
-        </button>
+        <input type="email" name="email" placeholder="Email" value={formData.email} onChange={handleChange} required />
+        <input type="password" name="password" placeholder="Password" value={formData.password} onChange={handleChange} required />
+        <button type="submit" disabled={loading}>{loading ? 'Logging in...' : 'Login'}</button>
       </form>
     </div>
   );
